@@ -1,0 +1,20 @@
+﻿{
+    "fileExtensions":
+    {
+        "still": ".webp",
+        "cutInTexture": ".png",
+        "cutInAtlas": ".atlas",
+        "cutInSkel": ".bin",
+        "scenarioScript": ".json",
+        "voice": ".mp3"
+    },
+    "font":
+    {
+        "filePath": "C:\\Windows\\Fonts\\yumin.ttf",
+        "bold": true,
+        "italic": true,
+        "messageFontSize": 32,
+        "thickness": 4,
+        "uiFontSize":20
+    }
+}
