@@ -116,7 +116,7 @@ namespace koihime_taisen
 		}
 		else if constexpr (std::is_same_v<CharType, char>)
 		{
-			/* 全角空白 {0xE3, 0x80, 0x80 } */
+			/* 全角空白 {0xE3, 0x80, 0x80 }も註釋と看做す */
 			return line.starts_with(R"(//)") || line.starts_with('#') || line.starts_with(reinterpret_cast<const char*>(u8"　"));
 		}
 	}
@@ -210,8 +210,6 @@ namespace koihime_taisen
 	{
 		if constexpr (std::is_same_v<CharType, wchar_t>)
 		{
-			/* Actually, I had used WinAPI wrapper here, not SDL API. */
-
 			std::string utf8FilePath = sdl_string_utility::NarrowToUtf8(filePath);
 			std::string textAsset = sdl_filesystem_utility::LoadFileAsString(utf8FilePath.data());
 			std::string scenarioScript = ExtractDataFromCocosTextAsset(textAsset);
@@ -541,7 +539,6 @@ bool koihime_taisen::ReadScenario(
 
 	for (auto& line : lines)
 	{
-		/* 全角空白も除外 */
 		size_t nPos = line.find_first_not_of("\r\n\t");
 		if (nPos != std::string_view::npos)
 		{

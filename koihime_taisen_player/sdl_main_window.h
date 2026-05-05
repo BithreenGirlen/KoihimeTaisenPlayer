@@ -78,12 +78,12 @@ private:
 
 	std::unique_ptr<CSdlTextDrawer> m_helpTextDrawer;
 
-	void handleKeyDown(SDL_KeyboardEvent keyBoardEvent);
-	void handleKeyUp(SDL_KeyboardEvent keyBoardEvent);
-	void handleMouseButtonDown(SDL_MouseButtonEvent mouseButtonEvent);
-	void handleMouseButtonUp(SDL_MouseButtonEvent mouseButtonEvent);
-	void handleMouseMotion(SDL_MouseMotionEvent mouseMotionEvent);
-	void handleMouseWheel(SDL_MouseWheelEvent mouseMotionEvent);
+	void handleKeyDown(const SDL_KeyboardEvent& keyBoardEvent);
+	void handleKeyUp(const SDL_KeyboardEvent& keyBoardEvent);
+	void handleMouseButtonDown(const SDL_MouseButtonEvent& mouseButtonEvent);
+	void handleMouseButtonUp(const SDL_MouseButtonEvent& mouseButtonEvent);
+	void handleMouseMotion(const SDL_MouseMotionEvent& mouseMotionEvent);
+	void handleMouseWheel(const SDL_MouseWheelEvent& mouseMotionEvent);
 
 	/// @brief Open non-blocking file-select-dialogue
 	void menuOnOpenFile();

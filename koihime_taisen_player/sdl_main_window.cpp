@@ -152,7 +152,7 @@ int CSdlMainWindow::display()
 	return 0;
 }
 
-void CSdlMainWindow::handleKeyDown(SDL_KeyboardEvent keyBoardEvent)
+void CSdlMainWindow::handleKeyDown(const SDL_KeyboardEvent& keyBoardEvent)
 {
 	if (const auto& io = ImGui::GetIO(); io.WantCaptureKeyboard)return;
 
@@ -172,7 +172,7 @@ void CSdlMainWindow::handleKeyDown(SDL_KeyboardEvent keyBoardEvent)
 	}
 }
 
-void CSdlMainWindow::handleKeyUp(SDL_KeyboardEvent keyBoardEvent)
+void CSdlMainWindow::handleKeyUp(const SDL_KeyboardEvent& keyBoardEvent)
 {
 	if (const auto& io = ImGui::GetIO(); io.WantCaptureKeyboard)return;
 
@@ -183,9 +183,6 @@ void CSdlMainWindow::handleKeyUp(SDL_KeyboardEvent keyBoardEvent)
 		break;
 	case SDL_SCANCODE_H:
 		m_windowState.toShowHelp ^= true;
-		break;
-	case SDL_SCANCODE_M:
-		menuOnOpenFile();
 		break;
 	case SDL_SCANCODE_T:
 		m_scenePlayer->setTextVisibility(!m_scenePlayer->isTextVisible());
@@ -218,7 +215,7 @@ void CSdlMainWindow::handleKeyUp(SDL_KeyboardEvent keyBoardEvent)
 	}
 }
 
-void CSdlMainWindow::handleMouseButtonDown(SDL_MouseButtonEvent mouseButtonEvent)
+void CSdlMainWindow::handleMouseButtonDown(const SDL_MouseButtonEvent& mouseButtonEvent)
 {
 	if (const auto& io = ImGui::GetIO(); io.WantCaptureMouse)return;
 
@@ -231,7 +228,7 @@ void CSdlMainWindow::handleMouseButtonDown(SDL_MouseButtonEvent mouseButtonEvent
 	}
 }
 
-void CSdlMainWindow::handleMouseButtonUp(SDL_MouseButtonEvent mouseButtonEvent)
+void CSdlMainWindow::handleMouseButtonUp(const SDL_MouseButtonEvent& mouseButtonEvent)
 {
 	if (const auto& io = ImGui::GetIO(); io.WantCaptureMouse)return;
 	if (!m_scenePlayer->hasScenarioData())return;
@@ -309,7 +306,7 @@ void CSdlMainWindow::handleMouseButtonUp(SDL_MouseButtonEvent mouseButtonEvent)
 	}
 }
 
-void CSdlMainWindow::handleMouseMotion(SDL_MouseMotionEvent mouseMotionEvent)
+void CSdlMainWindow::handleMouseMotion(const SDL_MouseMotionEvent& mouseMotionEvent)
 {
 	if (const auto& io = ImGui::GetIO(); io.WantCaptureMouse)return;
 
@@ -329,7 +326,7 @@ void CSdlMainWindow::handleMouseMotion(SDL_MouseMotionEvent mouseMotionEvent)
 	}
 }
 
-void CSdlMainWindow::handleMouseWheel(SDL_MouseWheelEvent mouseMotionEvent)
+void CSdlMainWindow::handleMouseWheel(const SDL_MouseWheelEvent& mouseMotionEvent)
 {
 	if (const auto& io = ImGui::GetIO(); io.WantCaptureMouse)return;
 
@@ -367,9 +364,9 @@ void CSdlMainWindow::handleMouseWheel(SDL_MouseWheelEvent mouseMotionEvent)
 void CSdlMainWindow::menuOnOpenFile()
 {
 	/*
-	* It is desirable to filter files by "char_*2.json" as WinAPI supports.
-	* But SDL provides filtering only on extension, and returns error if filename filter like the above were passed.
-	* So it is up to user to select the file of which name matches expected pattern.
+	* It is desirable to filter files by "char_*2.json" as is supported by Win32 API.
+	* But SDL provides filtering only by extension, and returns error if a filter like this were passed.
+	* So it is up to the user to select a script file whose name matches the expected pattern.
 	*/
 	SDL_DialogFileCallback fileDialogueCallback = [](void* userdata, const char* const* filelist, int filter)
 		-> void
@@ -517,19 +514,19 @@ void CSdlMainWindow::updateHelpText()
 
 	static constexpr const char8_t help[] =
 	{
-		u8"[H] Hide help\n"
-		u8"[T] Hide message\n"
+		u8"[H] Hide/show help\n"
+		u8"[T] Hide/show message\n"
 		u8"[C] Toggle text colour\n"
 		u8"[Scroll] Scale up/down\n"
 		u8"[Ctrl + scroll] Zoom in/out\n"
-		u8"[L-pressed + scroll] Speed up/down the animation\n"
 		u8"[L-drag] Move view-point\n"
-		u8"[M-click] Reset scale, speed, view-point\n"
-		u8"[R-pressed + M-click] Hide/show window's border \n"
-		u8"[R-pressed + L-click] Move window\n"
+		u8"[L-pressed + scroll] Speed up/down the animation\n"
+		u8"[M-click] Reset scale, animation speed, and view-point\n"
 		u8"[R-click] Show context menu to jump scene\n"
-		u8"[↑ | ↓] Open the next/prev. folder\n"
-		u8"[← | →; R-pressed + scroll] Fast forward/rewind the message\n"
+		u8"[R-pressed + M-click] Hide/show the border of window\n"
+		u8"[R-pressed + L-click] Move window\n"
+		u8"[← | →; R-pressed + scroll] Rewind/fast-forward the message\n"
+		u8"[↑ | ↓] Open the previous/next script\n"
 	};
 	m_helpTextDrawer->updateText(reinterpret_cast<const char*>(help), sizeof(help) - 1, windowWidth);
 }
